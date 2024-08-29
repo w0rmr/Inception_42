@@ -13,9 +13,17 @@
 
 [ certificates ?](https://en.wikipedia.org/wiki/Public_key_certificate).
 
-[TCP three-way handshake](https://en.wikipedia.org/wiki/Handshake_(computing)#TCP_three-way_handshake).
+[handshake](https://en.wikipedia.org/wiki/Handshake_(computing)).
 
 [Public-key cryptography](https://en.wikipedia.org/wiki/Public-key_cryptography).
 
+[TLS Handshake Explained - Computerphile](https://youtu.be/86cQJ0MMses).
+
+[is spoofing a ca-signed certificate possible](https://security.stackexchange.com/questions/20059/is-spoofing-a-ca-signed-certificate-possible).
+
+
+[what are cipher suites](https://venafi.com/blog/what-are-cipher-suites/).
+
+[Transport Layer Security (TLS) - Computerphile](https://youtu.be/86cQJ0MMses).
 
 

@@ -26,4 +26,9 @@
 
 [Transport Layer Security (TLS) - Computerphile](https://youtu.be/86cQJ0MMses).
 
+[what is nginx understanding the basics of nginx](https://medium.com/devopscurry/what-is-nginx-understanding-the-basics-of-nginx-in-2021-f8ee0f3d3d54) .
+
+[beginners guide](https://nginx.org/en/docs/beginners_guide.html#control).
+
+
 

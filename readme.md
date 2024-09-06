@@ -30,5 +30,13 @@
 
 [beginners guide](https://nginx.org/en/docs/beginners_guide.html#control).
 
+[demystifying nginx and php fpm for php developers](https://medium.com/@mgonzalezbaile/demystifying-nginx-and-php-fpm-for-php-developers-bba548dd38f9)
+
+[all you need to know about relational database management systems rdbmss](https://astera1.medium.com/all-you-need-to-know-about-relational-database-management-systems-rdbmss-4b86dd804bac)
+
+[mariadb](https://medium.com/@martadiez/mariadb-417998d9f780)
+
+[administering mariadb database](https://medium.com/@sahaayushioe/administering-mariadb-database-7ea26f225601)
+
 
 

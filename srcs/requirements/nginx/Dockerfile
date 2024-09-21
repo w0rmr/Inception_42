@@ -1,18 +1,19 @@
 FROM debian:latest
 
-RUN apt-get update &&  apt-get install -y nginx  openssl
-
 WORKDIR /etc/nginx/
 
-COPY tools/conf /etc/nginx/sites-available/default
-COPY tools/index.html /var/www/html/index.html
-COPY tools/setup.sh setup.sh
 
-#RUN bash /tmp/setup.sh
-RUN chmod +x ./setup.sh
+EXPOSE 443 88
+RUN apt-get update && apt-get upgrade && apt-get install -y nginx openssl
 
-EXPOSE 80 80
-EXPOSE 443 443
+COPY conf nginx.conf
+
+COPY setup.sh setup.sh
+
+COPY index.html /var/www/html/index.html
+
+RUN chmod +x setup.sh
 
 CMD ["./setup.sh"]
-# CMD ["tail", "-f", "/dev/null"]
+
+#CMD ["tail","-f","/dev/null"]

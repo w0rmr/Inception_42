@@ -1,0 +1,49 @@
+version: '3.8'
+
+networks:
+  inception:
+    name: inception
+volumes:
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/wormr/data/wp
+      o: bind
+  mariadb_data:
+    driver: local 
+    driver_opts:
+      type: none
+      device: /home/wormr/data/db
+
+servises:
+  nginx:
+    container_name: nginx
+    build: ./requiremnent/nginx
+    ports:
+      -"443:443"
+    depends_on:
+      - wordpress
+    network:
+      - inception 
+    volumes:
+      - wordpess_data:/var/www/html
+
+  wordpress:
+    container_name: wordpress
+    build: ./requirement/wordpress
+    volumes:
+      - wordpress_data:/var/www/html
+    network:
+      - inception
+    depends_on:
+      - mariadb
+  mariadb:
+    container_name: mariadb
+    build: ./requirement/mariadb
+    networks:
+      - inception 
+    volumes:
+      - mariadb:/var/lib/mysql
+    
+

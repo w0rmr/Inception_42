@@ -6,3 +6,4 @@ cp -a /tmp/wordpress/. /var/www/html
 chown -R www-data:www-data /var/www/html
 
 #sudo cp -a /tmp/wordpress/. /var/www/your_domain-y 
+                

@@ -3,7 +3,7 @@ FROM debian:latest
 WORKDIR /etc/nginx/
 
 
-EXPOSE 443 88
+# EXPOSE 443 88
 RUN apt-get update && apt-get upgrade && apt-get install -y nginx openssl
 
 COPY conf nginx.conf

@@ -1,5 +1,3 @@
-version: '3.8'
-
 networks:
   inception:
     name: inception
@@ -15,35 +13,77 @@ volumes:
     driver_opts:
       type: none
       device: /home/wormr/data/db
+      o: bind
 
-servises:
+services:
   nginx:
+    # image: nginx:latest
     container_name: nginx
-    build: ./requiremnent/nginx
+    build: ./requirements/nginx
     ports:
-      -"443:443"
+      - "443:443"
     depends_on:
-      - wordpress
-    network:
-      - inception 
-    volumes:
-      - wordpess_data:/var/www/html
-
-  wordpress:
-    container_name: wordpress
-    build: ./requirement/wordpress
+      - wordpress 
     volumes:
       - wordpress_data:/var/www/html
-    network:
+    networks:
+      - inception
+  wordpress:
+    # image: wordpress:latest
+    container_name: wordpress
+    build: ./requirements/wordpress
+    env_file: .env
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
       - inception
     depends_on:
       - mariadb
+      - redis
   mariadb:
+    # image: mariadb:latest
     container_name: mariadb
-    build: ./requirement/mariadb
-    networks:
-      - inception 
+    build: ./requirements/mariadb
+    ports:
+      - "3306:3306"
+    env_file: .env
     volumes:
-      - mariadb:/var/lib/mysql
-    
-
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - inception
+  redis:
+    # image: redis:latest
+    container_name: redis
+    build: ./requirements/bonus/redis
+    env_file: .env
+    networks:
+      - inception
+  ftp-server:
+    container_name: ftp-server
+    build: ./requirements/bonus/ftp-server
+    ports:
+      - "21:21"
+      - "20:20"
+      - "50000-50005:50000-50005"
+    env_file: .env
+    volumes:
+      - wordpress_data:/home/$FTP_USER/ftp
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+  tor:
+    container_name: tor
+    build: ./requirements/bonus/tor
+    networks:
+      - inception
+  adminer:
+    container_name: adminer
+    build: ./requirements/bonus/Adminer
+    networks:
+      - inception
+  website:
+     container_name: website
+     build: ./requirements/bonus/static_website
+     networks:
+         - inception

@@ -1,8 +1,10 @@
 FROM debian:bullseye
 
-RUN apt-get update && apt-get -y install mariadb-server
-#EXPOSE 3306
+RUN apt-get update
+
 COPY setup.sh setup.sh
+
 RUN chmod +x setup.sh
-#RUN ./setup.sh
+
 CMD ["./setup.sh"]
+# CMD ["tail","-f","/dev/null"]

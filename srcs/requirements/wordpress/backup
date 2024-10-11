@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Move to the /tmp directory
+cd /tmp
+
+# Update the package lists
+apt update
+
+# Download the latest version of WordPress
+curl -LO https://wordpress.org/latest.tar.gz
+
+# Extract the WordPress archive
+tar xzvf latest.tar.gz
+
+# Copy the sample configuration file
+cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
+sed -i "s/database_name_here/$DB_NAME/g" /tmp/wordpress/wp-config.php
+sed -i "s/username_here/$DB_USER/g" /tmp/wordpress/wp-config.php
+sed -i "s/password_here/$DB_PASSWORD/g" /tmp/wordpress/wp-config.php
+sed -i "s/localhost/$DB_HOST/g" /tmp/wordpress/wp-config.php
+sed -i "s/utf8/$DB_CHARSET/g" /tmp/wordpress/wp-config.php
+sed -i "s/'DB_COLLATE', ''/'DB_COLLATE', '$DB_COLLATE'/g" /tmp/wordpress/wp-config.php
+
+# Copy WordPress files to the web server root
+mkdir -p /var/www/html
+mkdir -p /run/php
+rm -rf /var/www/html/*
+cp -a /tmp/wordpress/. /var/www/html
+
+# Set ownership to www-data
+chown -R www-data:www-data /var/www/html
+
+# Configure PHP-FPM to listen on 0.0.0.0:9000
+sed -i "s/listen = .*/listen = wordpress:9000/g" /etc/php/7.4/fpm/pool.d/www.conf
+echo -e "starting php fpm"
+
+php-fpm7.4 -F 

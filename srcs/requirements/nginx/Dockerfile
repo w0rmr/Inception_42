@@ -1,10 +1,10 @@
-FROM debian:latest
+FROM debian:bullseye
 
 WORKDIR /etc/nginx/
 
 
 EXPOSE 443 88
-RUN apt-get update && apt-get upgrade && apt-get install -y nginx openssl
+RUN apt-get update   && apt-get install -y nginx openssl
 
 COPY conf nginx.conf
 

@@ -13,6 +13,7 @@ cp /etc/tor/torrc /etc/tor/backup.torrc
 
 echo "
 HiddenServiceDir /var/lib/tor/hidden_service/
-HiddenServicePort 80 website:80
+HiddenServicePort 80 website:8000
+HiddenServicePort $SSH_PORT website:$SSH_PORT
 " >> /etc/tor/torrc
 tor

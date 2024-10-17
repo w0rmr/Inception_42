@@ -1,6 +1,6 @@
 FROM debian:bullseye
 
-RUN apt-get update
+RUN apt-get update 
 
 COPY setup.sh setup.sh
 

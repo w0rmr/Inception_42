@@ -2,17 +2,23 @@ networks:
   inception:
     name: inception
 volumes:
+  website_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/atoukmat/data/static_website
+      o: bind
   wordpress_data:
     driver: local
     driver_opts:
       type: none
-      device: /home/wormr/data/wp
+      device: /home/atoukmat/data/wp
       o: bind
   mariadb_data:
     driver: local 
     driver_opts:
       type: none
-      device: /home/wormr/data/db
+      device: /home/atoukmat/data/db
       o: bind
 
 services:
@@ -75,6 +81,7 @@ services:
   tor:
     container_name: tor
     build: ./requirements/bonus/tor
+    env_file: .env
     networks:
       - inception
   adminer:
@@ -83,7 +90,10 @@ services:
     networks:
       - inception
   website:
-     container_name: website
-     build: ./requirements/bonus/static_website
-     networks:
+    container_name: website
+    build: ./requirements/bonus/static-website
+    env_file: .env
+    volumes:
+        - website_data:/home/$SSH_USER/files
+    networks:
          - inception

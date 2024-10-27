@@ -1,10 +1,27 @@
 /* styles.css */
 
+html, body {
+    height: 100%; /* Ensure the html and body elements take up the full height of the viewport */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    background-image: url('7-gradient-background-animation-CSS.jpg'); /* Set the background image */
+    background-size: cover; /* Ensure the image covers the entire section */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image */
+    color: white; /* Ensure text is visible over the background */
+}
+
+header, main, footer {
+    background: rgba(0, 0, 0, 0.5); /* Add a semi-transparent background to make text readable */
+    padding: 1rem;
+}
+img {
+    width: 150px;
+    height: auto;
+    margin-right: 1rem; /* Add some space between the image and the text */
 }
 
 header {
@@ -14,11 +31,6 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-header .logo {
-    width: 50px;
-    height: auto;
 }
 
 header nav ul {
@@ -33,12 +45,30 @@ header nav ul li {
 }
 
 header nav ul li a {
+
     color: white;
     text-decoration: none;
 }
 
+.container {
+    display: flex;
+    align-items: center; /* Align items vertically centered */
+}
+
+h1.badtrip {
+    margin-top: 0; /* Adjust margin as needed */
+    font-size: 2.1rem; /* Make the text larger */
+}
+
+p.badtip1 {
+    font-size: 0.875rem;
+    margin-top: 0.5rem; /* Adjust margin as needed */
+}
+
 main {
+    color: white;
     padding: 2rem;
+
 }
 
 section {

@@ -6,19 +6,19 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/atoukmat/data/static_website
+      device: /home/badtrip/Inception_42/srcs/requirements/bonus/static-website/files
       o: bind
   wordpress_data:
     driver: local
     driver_opts:
       type: none
-      device: /home/atoukmat/data/wp
+      device: /home/badtrip/data/wp
       o: bind
   mariadb_data:
     driver: local 
     driver_opts:
       type: none
-      device: /home/atoukmat/data/db
+      device: /home/badtrip/data/db
       o: bind
 
 services:

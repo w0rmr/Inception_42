@@ -1,13 +1,11 @@
 #!/bin/bash
 
-echo "deb https://deb.torproject.org/torproject.org bullseye main" | tee -a /etc/apt/sources.list
-echo "deb-src https://deb.torproject.org/torproject.org bullseye main" | tee -a /etc/apt/sources.list
-
-apt install curl gnupg2 -y
-
-curl https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --import
-gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | apt-key add -
-apt install tor -y
+# Install tor package if not already installed
+if ! command -v tor &> /dev/null
+then
+	apt-get update
+	apt-get install -y tor
+fi
 
 cp /etc/tor/torrc /etc/tor/backup.torrc
 
@@ -16,4 +14,13 @@ HiddenServiceDir /var/lib/tor/hidden_service/
 HiddenServicePort 80 website:8000
 HiddenServicePort $SSH_PORT website:$SSH_PORT
 " >> /etc/tor/torrc
+
+tor & 
+while [ ! -f "/var/lib/tor/hidden_service/hostname" ]; do 
+	echo -e "waiting .. ! "
+	sleep 1
+done
+ cat -e /var/lib/tor/hidden_service/hostname | awk '{print " \033[31myour hostname is \033[32m" $0 "\033[0m"}'
+
+pkill tor
 tor

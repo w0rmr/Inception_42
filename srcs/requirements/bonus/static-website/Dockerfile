@@ -1,6 +1,6 @@
 FROM debian:bullseye
 
-RUN apt-get update -y  && apt install ssh python3 -y
+RUN apt update -y  && apt install ssh python3 vim -y 
 
 COPY files files
 

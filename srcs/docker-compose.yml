@@ -6,39 +6,41 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/badtrip/Inception_42/srcs/requirements/bonus/static-website/files
+      device: /home/atoukmat/data/website_files
       o: bind
   wordpress_data:
     driver: local
     driver_opts:
       type: none
-      device: /home/badtrip/data/wp
+      device: /home/atoukmat/data/wp
       o: bind
   mariadb_data:
     driver: local 
     driver_opts:
       type: none
-      device: /home/badtrip/data/db
+      device: /home/atoukmat/data/db
       o: bind
 
 services:
   nginx:
-    # image: nginx:latest
+    image: nginx:42
     container_name: nginx
     build: ./requirements/nginx
     ports:
       - "443:443"
     depends_on:
       - wordpress 
+    restart: always
     volumes:
       - wordpress_data:/var/www/html
     networks:
       - inception
   wordpress:
-    # image: wordpress:latest
+    image: wordpress:42
     container_name: wordpress
     build: ./requirements/wordpress
     env_file: .env
+    restart: always
     volumes:
       - wordpress_data:/var/www/html
     networks:
@@ -47,24 +49,25 @@ services:
       - mariadb
       - redis
   mariadb:
-    # image: mariadb:latest
+    image: mariadb:42
     container_name: mariadb
     build: ./requirements/mariadb
-    ports:
-      - "3306:3306"
     env_file: .env
+    restart: always
     volumes:
       - mariadb_data:/var/lib/mysql
     networks:
       - inception
   redis:
-    # image: redis:latest
+    image: redis:42
     container_name: redis
     build: ./requirements/bonus/redis
     env_file: .env
+    restart: always
     networks:
       - inception
   ftp-server:
+    image: ftp:42
     container_name: ftp-server
     build: ./requirements/bonus/ftp-server
     ports:
@@ -72,6 +75,7 @@ services:
       - "20:20"
       - "50000-50005:50000-50005"
     env_file: .env
+    restart: always
     volumes:
       - wordpress_data:/home/$FTP_USER/ftp
     networks:
@@ -79,20 +83,30 @@ services:
     depends_on:
       - wordpress
   tor:
+    image: tor:42
     container_name: tor
     build: ./requirements/bonus/tor
     env_file: .env
+    restart: always
     networks:
       - inception
+    depends_on:
+      - website
   adminer:
+    image: adminer:42
     container_name: adminer
     build: ./requirements/bonus/Adminer
+    restart: always
     networks:
       - inception
+    depends_on:
+      - nginx
   website:
+    image: website:42
     container_name: website
     build: ./requirements/bonus/static-website
     env_file: .env
+    restart: always
     volumes:
         - website_data:/home/$SSH_USER/files
     networks:

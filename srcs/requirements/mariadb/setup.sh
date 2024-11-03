@@ -45,5 +45,6 @@ sed -i "s/bind-address\s*=\s*127\.0\.0\.1/bind-address = 0.0.0.0/g" /etc/mysql/m
 pkill mysqld
 
 echo -e "Restarting MySQL..."
-mysqld 
+
+exec "$@"
 

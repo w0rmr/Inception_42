@@ -1,26 +1,26 @@
 #!/bin/bash
 
-# Install tor package if not already installed
-if ! command -v tor &> /dev/null
-then
-	apt-get update
-	apt-get install -y tor
+if [ -f "/etc/tor/backup.torrc" ]; then 
+    echo "Backup configuration exists."
+else
+    cp /etc/tor/torrc /etc/tor/backup.torrc
+    echo "
+    HiddenServiceDir /var/lib/tor/myservice/
+    HiddenServicePort 80 website:8000
+    HiddenServicePort $SSH_PORT website:$SSH_PORT
+    " >> /etc/tor/torrc
 fi
 
-cp /etc/tor/torrc /etc/tor/backup.torrc
+echo "Starting Tor service..."
+tor &
 
-echo "
-HiddenServiceDir /var/lib/tor/hidden_service/
-HiddenServicePort 80 website:8000
-HiddenServicePort $SSH_PORT website:$SSH_PORT
-" >> /etc/tor/torrc
-
-tor & 
-while [ ! -f "/var/lib/tor/hidden_service/hostname" ]; do 
-	echo -e "waiting .. ! "
-	sleep 1
+while [ ! -f "/var/lib/tor/myservice/hostname" ]; do 
+    echo -e "Waiting for hostname file..."
+    sleep 1
 done
- cat -e /var/lib/tor/hidden_service/hostname | awk '{print " \033[31myour hostname is \033[32m" $0 "\033[0m"}'
 
+cat /var/lib/tor/myservice/hostname | awk '{print " \033[31mYour hostname is \033[32m" $0 "\033[0m"}'
 pkill tor
-tor
+
+
+exec tor

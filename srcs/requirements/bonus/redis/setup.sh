@@ -6,4 +6,4 @@ sed -i \
 -e 's/^# maxmemory-policy noeviction/maxmemory-policy allkeys-lru/' \
 /etc/redis/redis.conf
 
-redis-server --protected-mode no
+exec redis-server --protected-mode no

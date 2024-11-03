@@ -8,4 +8,4 @@ mv latest.php /var/www/html/index.php
 
 cd /var/www/html
 
-php -S 0.0.0.0:80
+exec php -S 0.0.0.0:80

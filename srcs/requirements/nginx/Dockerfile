@@ -1,19 +1,20 @@
 FROM debian:bullseye
 
+
+
+EXPOSE 443 
+RUN apt-get update  -y && apt-get install -y nginx openssl procps \
+    && apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /etc/nginx/
-
-
-EXPOSE 443 88
-RUN apt-get update   && apt-get install -y nginx openssl
 
 COPY conf nginx.conf
 
 COPY setup.sh setup.sh
 
-COPY index.html /var/www/html/index.html
-
 RUN chmod +x setup.sh
 
-CMD ["./setup.sh"]
+ENTRYPOINT ["./setup.sh"]
 
-#CMD ["tail","-f","/dev/null"]
+CMD ["nginx", "-g", "daemon off;"]

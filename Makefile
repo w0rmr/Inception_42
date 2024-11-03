@@ -27,7 +27,7 @@ restart: down up
 
 .PHONY: set_host
 set_host:
-	sudo echo "atoukmat.42.fr" >> /etc/hosts
+	sudo echo "127.0.0.1	atoukmat.42.fr" >> /etc/hosts
 
 .PHONY: logs
 logs:

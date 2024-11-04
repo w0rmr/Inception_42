@@ -6,7 +6,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/atoukmat/data/website_files
+      device: /root/inception/srcs/requirements/bonus/static-website/files
       o: bind
   wordpress_data:
     driver: local
